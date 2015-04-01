@@ -1,6 +1,7 @@
 {
     "name": "leela/urlshortnerapi",
     "description": "URL Shortner API",
+    "license" : "MIT",
     "authors": [
         {
             "name": "leela narasimha",
