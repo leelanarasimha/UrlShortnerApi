@@ -8,7 +8,8 @@ It also takes the short url and sends the statistics and also the long url.
 
 Begin by installing this package through Composer. Edit your project's `composer.json` file to require`.
 
-	"require-dev": {
+	"require": {
+	"leela/urlshortnerapi": "1.0"
 	}
 
 
