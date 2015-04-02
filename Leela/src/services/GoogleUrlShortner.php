@@ -4,18 +4,28 @@ namespace Leela\services;
 use Leela\Contracts\UrlShortnerInterface;
 use Leela\Traits\UrlShortnerTrait;
 
-class UrlShortner implements UrlShortnerInterface
+class GoogleUrlShortner implements UrlShortnerInterface
 {
     use UrlShortnerTrait;
 
     private $api_key;
     private $url = 'https://www.googleapis.com/urlshortener/v1/url';
 
+    /**
+     * Constructor
+     * @param $api_key
+     */
     public function __construct($api_key)
     {
         $this->api_key = $api_key;
     }
 
+    /**
+     * Converts the Long Url into short Url
+     * @param $value URL
+     * @return mixed
+     * @throws \Exception
+     */
     public function makeShort($value)
     {
         if (!$this->checkValidUrl($value)) {
@@ -23,7 +33,7 @@ class UrlShortner implements UrlShortnerInterface
         }
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->url);
+        curl_setopt($ch, CURLOPT_URL, $this->url.'?key='.$this->api_key);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array("longUrl" => $value)));
@@ -39,6 +49,13 @@ class UrlShortner implements UrlShortnerInterface
         }
     }
 
+    /**
+     * Converts Short Url into the long url
+     * @param $value
+     * @param bool $total_details
+     * @return mixed
+     * @throws \Exception
+     */
     public function makeLong($value, $total_details = FALSE)
     {
         if (!$this->checkValidUrl($value)) {
